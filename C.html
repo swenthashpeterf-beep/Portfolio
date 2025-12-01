@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Library Project: Source Code Analysis</title>
+    <!-- Load Tailwind CDN and Inter font -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Dark Blue Theme based on projects.html */
+        :root {
+            --bg-primary: #1A202C;
+            --bg-card: #2D3748;
+            --text-default: #E2E8F0;
+            --accent: #4A90E2; /* Dark Blue Accent */
+        }
+
+        /* Apply theme to body and primary containers */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-default);
+        }
+
+        pre code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .section-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 flex flex-col items-center">
+
+    <div class="max-w-5xl w-full">
+        <!-- New: Go Back to Portfolio Button -->
+        <nav class="mb-6">
+            <a href="projects.html" class="inline-flex items-center text-accent hover:text-blue-300 font-semibold transition-colors duration-200 p-2 rounded-lg bg-bg-card/70 shadow-md">
+                <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+                Go back to Portfolio
+            </a>
+        </nav>
+        
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold mb-2 text-accent">C Library Project Analysis</h1>
+            <p class="text-lg text-gray-400">Deep dive into the source code of the Library Management System.</p>
+        </header>
+
+        <main class="space-y-8">
+            
+            <!-- CODE STRUCTURE SECTION -->
+            <section class="section-card p-6 rounded-xl shadow-2xl">
+                <h2 class="text-2xl font-semibold mb-4 text-text-default flex items-center">
+                    <i data-lucide="file-text" class="w-6 h-6 mr-3 text-accent"></i> Core Data Structures
+                </h2>
+                <p class="text-gray-300 mb-4">The system relies on a simple, fixed-size array to store book records. The core definition is the `Book` structure and the global array.</p>
+                <pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm text-green-300 leading-relaxed">
+<code>
+// 1. Constants define limits
+#define MAX_BOOKS 100
+#define MAX_TITLE 100
+
+// 2. Structure defines a single record (Book)
+typedef struct {
+    int id;
+    char title[MAX_TITLE];
+    int isIssued; // 0 = available, 1 = issued
+} Book;
+
+// 3. Global fixed-size array and counter (the "database")
+Book library[MAX_BOOKS];
+int bookCount = 0;
+</code>
+</pre>
+            </section>
+
+            <!-- FILE HANDLING SECTION -->
+            <section class="section-card p-6 rounded-xl shadow-2xl">
+                <h2 class="text-2xl font-semibold mb-4 text-text-default flex items-center">
+                    <i data-lucide="save" class="w-6 h-6 mr-3 text-accent"></i> Persistence (File I/O)
+                </h2>
+                <p class="text-gray-300 mb-4">Data persistence is handled using binary file operations (`books.dat`), ensuring the data remains even after the program closes. This uses `rb` and `wb` modes.</p>
+                <pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm text-green-300 leading-relaxed">
+<code>
+void loadBooksFromFile() {
+    FILE *file = fopen("books.dat", "rb"); // Read Binary mode
+    if (file) {
+        // Read the total number of books first
+        fread(&bookCount, sizeof(int), 1, file);
+        // Read the entire array of books
+        fread(library, sizeof(Book), bookCount, file);
+        fclose(file);
+    }
+}
+
+void saveBooksToFile() {
+    FILE *file = fopen("books.dat", "wb"); // Write Binary mode
+    if (file) {
+        // Write the count and then the entire array data
+        fwrite(&bookCount, sizeof(int), 1, file);
+        fwrite(library, sizeof(Book), bookCount, file);
+        fclose(file);
+    }
+}
+</code>
+</pre>
+            </section>
+            
+            <!-- CRUD Operation: Delete Book Analysis -->
+            <section class="section-card p-6 rounded-xl shadow-2xl">
+                <h2 class="text-2xl font-semibold mb-4 text-text-default flex items-center">
+                    <i data-lucide="trash-2" class="w-6 h-6 mr-3 text-accent"></i> Deleting a Record (Array Shift)
+                </h2>
+                <p class="text-gray-300 mb-4">The `deleteBook` function demonstrates array manipulation by shifting elements left to fill the gap left by the deleted book ID, simulating a removal operation without leaving an empty slot.</p>
+                <pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm text-green-300 leading-relaxed">
+<code>
+void deleteBook() {
+    // ... input and search loop ...
+
+    // Found the book at index 'i'
+    if (library[i].id == id) {
+        found = 1;
+        // Shift all subsequent elements one position to the left
+        for (int j = i; j < bookCount - 1; j++) {
+            library[j] = library[j + 1];
+        }
+        bookCount--; // Decrease the count
+        saveBooksToFile();
+        // ...
+    }
+}
+</code>
+</pre>
+            </section>
+
+            <!-- MAIN LOOP & CONTROL -->
+            <section class="section-card p-6 rounded-xl shadow-2xl">
+                <h2 class="text-2xl font-semibold mb-4 text-text-default flex items-center">
+                    <i data-lucide="activity" class="w-6 h-6 mr-3 text-accent"></i> Program Control Flow
+                </h2>
+                <p class="text-gray-300 mb-4">The `main` function is the control hub, loading data at startup and using a `do-while` loop with a `switch` statement to handle user menu choices until exit.</p>
+                <pre class="bg-gray-800 p-4 rounded-lg overflow-x-auto text-sm text-green-300 leading-relaxed">
+<code>
+int main() {
+    int choice;
+    loadBooksFromFile(); // Load data once at startup
+
+    do {
+        // Menu display here...
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addBook(); break;
+            case 2: deleteBook(); break;
+            // ... cases 3, 4, 5 ...
+            case 6: printf("Exiting...\n"); break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 6);
+
+    return 0;
+}
+</code>
+</pre>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JavaScript to render icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

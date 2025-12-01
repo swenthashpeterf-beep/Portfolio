@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <!-- Load Tailwind CDN and Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- CSS Variables for Dark/Light Mode & Custom Styles -->
+    <style>
+        /* Set the default font to Inter and apply smooth scrolling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* Define colors using CSS Variables */
+        /* 1. Light Mode Defaults */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-card: #f0f4f8;
+            --text-default: #1A202C;
+            --border-color: #E2E8F0;
+            --accent: #4A90E2;
+            --text-muted: #4A5568;
+        }
+
+        /* 2. Dark Mode Overrides (When 'dark' class is applied to html) */
+        html.dark {
+            --bg-primary: #1A202C;
+            --bg-card: #2D3748;
+            --text-default: #E2E8F0;
+            --border-color: #4A5568;
+            --accent: #4A90E2;
+            --text-muted: #A0AEC0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar styling for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+    </style>
+    
+    <!-- Tailwind Configuration (Must be included before any custom JS) -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        // Map utility class names to CSS variables
+                        'bg-primary': 'var(--bg-primary)',
+                        'bg-card': 'var(--bg-card)',
+                        'text-default': 'var(--text-default)',
+                        'accent': 'var(--accent)',
+                        'text-muted': 'var(--text-muted)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-primary text-text-default min-h-screen transition-colors duration-500">
+
+    <nav class="sticky top-0 z-50 bg-bg-primary/95 backdrop-blur-sm shadow-xl border-b border-border-color transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Navigation Avatar updated to use Swenth.png -->
+                <a href="./index.html" class="flex items-center space-x-3">
+                    <img 
+                        src="Swenth.png" 
+                        alt="Swenth Avatar" 
+                        class="w-8 h-8 rounded-full object-cover border-2 border-accent"
+                    >
+                    <span class="text-xl font-bold text-accent">
+                        Home
+                    </span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="./projects.html" class="text-accent font-bold duration-200 py-2">Work</a>
+                    
+                    <a href="./index.html#skills" class="text-text-default hover:text-accent transition-colors duration-200 py-2">Skills</a>
+                    <a href="./index.html#social" class="text-text-default hover:text-accent transition-colors duration-200 py-2">Connect</a>
+
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="p-2 rounded-full bg-bg-card text-text-default hover:text-accent transition-colors duration-300 shadow-md" aria-label="Toggle dark mode">
+                        <!-- Icon will be dynamically set by JS -->
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <section id="work" class="py-10">
+            <h1 class="text-4xl font-extrabold text-center mb-16 text-text-default">
+                <span class="text-accent">My Work</span> & Projects
+            </h1>
+            
+            <div class="grid md:grid-cols-2 gap-8 justify-center"> 
+                
+                <!-- PROJECT 1: C Library - Image source updated to c library.jpg -->
+                <div class="bg-bg-card p-6 rounded-xl shadow-lg hover:shadow-accent/30 transition-all duration-300 transform hover:scale-[1.02] border border-border-color">
+                    <!-- IMAGE SOURCE UPDATED: c library.jpg -->
+                    <img 
+                        src="library.jpg" 
+                        alt="Screenshot of C Library Documentation or Interface" 
+                        class="w-full h-auto rounded-lg mb-4 object-cover border border-border-color"
+                    >
+
+                    <h3 class="text-2xl font-semibold mb-3 text-accent">C Standard Utility Library</h3>
+                    <p class="text-text-muted mb-4">A custom library written in <strong>C</strong>, designed to implement efficient data structures (like hash maps and dynamic arrays) and utility functions from scratch, focusing on memory management and performance optimization.</p>
+                    <p class="text-sm font-light text-text-muted/70 mb-4">Tech Stack: C, Data Structures, Memory Management</p>
+                    <a href="C.html" target="_blank" class="inline-flex items-center text-accent font-medium hover:underline">
+                        View Project
+                        <i data-lucide="external-link" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- PROJECT 2: MedTech Pharmacy Search - Image source updated to pharmacy.jpg -->
+                <div class="bg-bg-card p-6 rounded-xl shadow-lg hover:shadow-accent/30 transition-all duration-300 transform hover:scale-[1.02] border border-border-color">
+                    <!-- IMAGE SOURCE UPDATED: pharmacy.jpg -->
+                    <img 
+                        src="pharmacy.jpg" 
+                        alt="Screenshot of MedTech Pharmacy Search Interface" 
+                        class="w-full h-auto rounded-lg mb-4 object-cover border border-border-color"
+                    >
+
+                    <h3 class="text-2xl font-semibold mb-3 text-accent">MedTech - Pharmacy Search App</h3>
+                    <p class="text-text-muted mb-4">A responsive web application that allows users to search for medicines, displaying detailed information on their uses, general effects, and potential side effects, promoting health literacy.</p>
+                    <p class="text-sm font-light text-text-muted/70 mb-4">Tech Stack: HTML, CSS, JavaScript, PHP, MySQL (via XAMPP)</p>
+                    <a href="medtech_demo.html" target="_blank" class="inline-flex items-center text-accent font-medium hover:underline">
+                        View Project
+                        <i data-lucide="external-link" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+
+            </div>
+            
+            </section>
+
+    </div>
+    
+    <!-- Unified JavaScript Block -->
+    <script>
+        const htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+
+        function updateIcon(isDark) {
+            themeToggle.innerHTML = isDark 
+                ? '<i data-lucide="sun" class="w-5 h-5"></i>' 
+                : '<i data-lucide="moon" class="w-5 h-5"></i>';
+            lucide.createIcons(); // Re-render Lucide icons
+        }
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+            updateIcon(isDark);
+        }
+
+        function toggleTheme() {
+            const isDark = htmlElement.classList.contains('dark');
+            const newThemeIsDark = !isDark;
+            applyTheme(newThemeIsDark);
+            localStorage.setItem('theme', newThemeIsDark ? 'dark' : 'light');
+        }
+
+        // Initial theme setup on load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            let initialDark = false;
+            
+            if (savedTheme === 'dark') {
+                initialDark = true;
+            } else if (savedTheme === 'light') {
+                initialDark = false;
+            } else if (prefersDark) {
+                initialDark = true;
+            }
+            
+            applyTheme(initialDark);
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        
+        // Initialize everything
+        lucide.createIcons();
+        initializeTheme();
+    </script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <!-- Load Tailwind CDN and Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- CSS Variables for Dark/Light Mode & Custom Styles -->
+    <style>
+        /* Set the default font to Inter and apply smooth scrolling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* Define colors using CSS Variables */
+        /* 1. Light Mode Defaults */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-card: #f0f4f8;
+            --text-default: #1A202C;
+            --border-color: #E2E8F0;
+            --accent: #4A90E2;
+            --text-muted: #4A5568;
+        }
+
+        /* 2. Dark Mode Overrides (When 'dark' class is applied to html) */
+        html.dark {
+            --bg-primary: #1A202C;
+            --bg-card: #2D3748;
+            --text-default: #E2E8F0;
+            --border-color: #4A5568;
+            --accent: #4A90E2;
+            --text-muted: #A0AEC0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar styling for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+    </style>
+    
+    <!-- Tailwind Configuration (Must be included before any custom JS) -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable class-based dark mode
+            theme: {
+                extend: {
+                    colors: {
+                        // Map utility class names to CSS variables
+                        'bg-primary': 'var(--bg-primary)',
+                        'bg-card': 'var(--bg-card)',
+                        'text-default': 'var(--text-default)',
+                        'accent': 'var(--accent)',
+                        'text-muted': 'var(--text-muted)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-primary text-text-default min-h-screen transition-colors duration-500">
+
+    <nav class="sticky top-0 z-50 bg-bg-primary/95 backdrop-blur-sm shadow-xl border-b border-border-color transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Navigation Avatar: Switched source to 'Swenth.png' -->
+                <a href="./index.html" class="flex items-center space-x-3">
+                    <img 
+                        src="Swenth.png" 
+                        alt="Swenth Avatar" 
+                        class="w-8 h-8 rounded-full object-cover border-2 border-accent"
+                    >
+                    <span class="text-xl font-bold text-accent">
+                        Hi I'm Swenth!
+                    </span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="./projects.html" class="text-text-default hover:text-accent transition-colors duration-200 py-2">Work</a>
+                    
+                    <button onclick="scrollToSection('skills')" class="text-text-default hover:text-accent transition-colors duration-200">Skills</button>
+                    <button onclick="scrollToSection('social')" class="text-text-default hover:text-accent transition-colors duration-200">Connect</button>
+
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="p-2 rounded-full bg-bg-card text-text-default hover:text-accent transition-colors duration-300 shadow-md" aria-label="Toggle dark mode">
+                        <!-- Icon will be dynamically set by JS -->
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center py-16 sm:py-20 lg:py-24 space-y-6">
+            
+            <div class="flex justify-center mb-6">
+                <!-- Main Profile Image: Switched source to 'Swenth.png' -->
+                <img 
+                    src="Swenth.png" 
+                    alt="Professional portrait of Swenth" 
+                    class="w-32 h-32 rounded-full object-cover border-4 border-accent shadow-lg"
+                >
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-default leading-tight">
+                Hello, I'm <span class="text-accent">Swenth Ash Peter M. Fernandez</span>
+            </h1>
+            <p class="text-xl text-text-muted max-w-2xl mx-auto">
+                <strong class="font-bold">Junior Full-Stack Developer</strong> | Enthusiastic Problem Solver
+            </p>
+            
+            <a href="./projects.html" 
+               class="inline-flex items-center text-lg bg-accent text-white px-8 py-3 rounded-full font-semibold shadow-xl hover:bg-accent/90 transition-colors duration-300 transform hover:scale-105">
+                View My Work / Projects
+                <i data-lucide="arrow-right" class="w-5 h-5 ml-3"></i>
+            </a>
+            
+            <p class="text-base text-text-muted max-w-xl mx-auto pt-4">
+                I am a passionate <strong class="font-bold">Junior Developer</strong> focused on building clean, modern, and efficient web applications. I'm eager to apply my foundational skills in 
+                <strong class="font-bold">Web dev, and design principles</strong> to solve real-world problems.
+            </p>
+        </header>
+        
+        <section id="skills" class="py-10 border-t border-border-color">
+            <h2 class="text-3xl font-bold text-center mb-10 text-accent">Languages & Skills</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">JavaScript</span>
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">Python</span>
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">C</span>
+                
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">HTML</span>
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">CSS</span>
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">JS</span>
+                <span class="bg-accent/20 text-accent text-sm font-medium px-4 py-2 rounded-full shadow-md">PHP</span>
+
+            </div>
+        </section>
+
+        <section id="social" class="py-10 border-t border-border-color text-center">
+            <h2 class="text-3xl font-bold mb-6 text-accent">Let's Connect!</h2>
+            <div class="flex justify-center space-x-6">
+                
+                <a href="https://github.com/swenthashpeterf-beep" target="_blank" aria-label="GitHub Profile"
+                    class="bg-bg-card text-text-default p-4 rounded-full hover:bg-accent hover:text-white transition-colors duration-300 transform hover:scale-110 shadow-lg">
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                </a>
+
+                <a href="https://instagram.com/lumpiaghetti" target="_blank" aria-label="Instagram Profile"
+                    class="bg-bg-card text-text-default p-4 rounded-full hover:bg-pink-500 hover:text-white transition-colors duration-300 transform hover:scale-110 shadow-lg">
+                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                </a>
+
+                <a href="https://facebook.com/swenthz" target="_blank" aria-label="Facebook Profile"
+                    class="bg-bg-card text-text-default p-4 rounded-full hover:bg-blue-600 hover:text-white transition-colors duration-300 transform hover:scale-110 shadow-lg">
+                    <i data-lucide="facebook" class="w-6 h-6"></i>
+                </a>
+
+            </div>
+        </section>
+    </div> 
+    
+    <!-- Unified JavaScript Block -->
+    <script>
+        const htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+
+        function updateIcon(isDark) {
+            themeToggle.innerHTML = isDark 
+                ? '<i data-lucide="sun" class="w-5 h-5"></i>' 
+                : '<i data-lucide="moon" class="w-5 h-5"></i>';
+            lucide.createIcons(); // Re-render Lucide icons
+        }
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+            updateIcon(isDark);
+        }
+
+        function toggleTheme() {
+            const isDark = htmlElement.classList.contains('dark');
+            const newThemeIsDark = !isDark;
+            applyTheme(newThemeIsDark);
+            localStorage.setItem('theme', newThemeIsDark ? 'dark' : 'light');
+        }
+
+        // Initial theme setup on load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            let initialDark = false;
+            
+            if (savedTheme === 'dark') {
+                initialDark = true;
+            } else if (savedTheme === 'light') {
+                initialDark = false;
+            } else if (prefersDark) {
+                initialDark = true;
+            }
+            
+            applyTheme(initialDark);
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Simple JavaScript function to handle smooth scrolling to sections
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize everything
+        lucide.createIcons();
+        initializeTheme();
+    </script>
+</body>
+</html>
